@@ -25,18 +25,33 @@
         <el-icon><Bottom /></el-icon>
         {{ savingsPercent }}%
       </p>
+      <div v-if="image.status === 'pending'" class="actions">
+        <el-button size="small" @click="openCropper">
+          <el-icon><Crop /></el-icon>
+          {{ image.croppedFile ? '重新裁剪' : '裁剪' }}
+        </el-button>
+      </div>
     </div>
+    <CropperModal
+      v-model="showCropper"
+      :image-url="image.originalUrl"
+      :image-file="image.file"
+      @crop="handleCrop"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { CircleCloseFilled, Clock, Bottom } from '@element-plus/icons-vue'
-import type { ImageFile } from '../types/image'
+import { computed, ref } from 'vue'
+import { CircleCloseFilled, Clock, Bottom, Crop } from '@element-plus/icons-vue'
+import type { ImageFile, CropData } from '../types/image'
+import CropperModal from './CropperModal.vue'
 
 const props = defineProps<{
   image: ImageFile
 }>()
+
+const showCropper = ref(false)
 
 const previewUrl = computed(() =>
   props.image.compressedUrl || props.image.originalUrl
@@ -51,6 +66,16 @@ const formatSize = (bytes: number) => {
   if (bytes < 1024) return bytes + ' B'
   if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB'
   return (bytes / (1024 * 1024)).toFixed(2) + ' MB'
+}
+
+const openCropper = () => {
+  showCropper.value = true
+}
+
+const handleCrop = (file: File, cropData: CropData) => {
+  props.image.croppedFile = file
+  props.image.cropData = cropData
+  showCropper.value = false
 }
 </script>
 
@@ -169,5 +194,9 @@ const formatSize = (bytes: number) => {
 
 .image-info .savings .el-icon {
   font-size: 14px;
+}
+
+.image-info .actions {
+  margin-top: 8px;
 }
 </style>
