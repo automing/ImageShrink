@@ -8,10 +8,11 @@ export function useImageCrop() {
 
   const initCropper = (imageElement: HTMLImageElement, options?: Cropper.Options) => {
     cropper.value = new Cropper(imageElement, {
-      viewMode: 1,
-      autoCropArea: 0.8,
+      viewMode: 2,
+      autoCropArea: 0.9,
       responsive: true,
-      zoomable: false,
+      zoomable: true,
+      scalable: true,
       ...options
     })
     isCropping.value = true

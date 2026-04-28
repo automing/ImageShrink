@@ -217,7 +217,7 @@ const handleCancel = () => {
 
 .cropper-image-wrapper {
   width: 100%;
-  max-height: 60vh;
+  max-height: 70vh;
   overflow: hidden;
   background: #f5f5f5;
   display: flex;
@@ -227,7 +227,7 @@ const handleCancel = () => {
 
 .cropper-image {
   max-width: 100%;
-  max-height: 60vh;
+  max-height: 70vh;
   display: block;
 }
 </style>
