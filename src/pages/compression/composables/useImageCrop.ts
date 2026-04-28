@@ -20,7 +20,9 @@ export function useImageCrop() {
 
   const getCropData = (): CropData | null => {
     if (!cropper.value) return null
-    const data = cropper.value.getData()
+    const selection = cropper.value.getCropperSelection()
+    if (!selection) return null
+    const data = selection.getData()
     return {
       x: data.x,
       y: data.y,
@@ -30,30 +32,37 @@ export function useImageCrop() {
   }
 
   const setAspectRatio = (ratio: number) => {
-    cropper.value?.setAspectRatio(ratio)
+    const selection = cropper.value?.getCropperSelection()
+    if (selection) {
+      selection.setAspectRatio(ratio)
+    }
   }
 
   const rotate = (degree: number) => {
-    cropper.value?.rotate(degree)
+    const image = cropper.value?.getCropperImage()
+    if (image) {
+      image.rotate(degree)
+    }
   }
 
   const getCroppedFile = async (originalFile: File, outputFormat?: string): Promise<File> => {
-    return new Promise((resolve, reject) => {
-      if (!cropper.value) {
-        reject(new Error('Cropper not initialized'))
-        return
-      }
+    const canvas = cropper.value?.getCropperCanvas()
+    if (!canvas) {
+      throw new Error('Failed to get canvas')
+    }
 
-      cropper.value.getCroppedCanvas().toBlob(async (blob) => {
+    const canvasEl = await canvas.$toCanvas()
+    
+    return new Promise((resolve, reject) => {
+      const ext = outputFormat || originalFile.name.split('.').pop() || 'jpeg'
+      const mimeType = `image/${ext === 'jpg' ? 'jpeg' : ext}`
+      const fileName = originalFile.name.replace(/\.[^.]+$/, '_cropped.' + ext)
+
+      canvasEl.toBlob((blob) => {
         if (!blob) {
           reject(new Error('Failed to crop image'))
           return
         }
-
-        const ext = outputFormat || originalFile.name.split('.').pop() || 'jpeg'
-        const mimeType = `image/${ext === 'jpg' ? 'jpeg' : ext}`
-        const fileName = originalFile.name.replace(/\.[^.]+$/, '_cropped.' + ext)
-
         const file = new File([blob], fileName, { type: mimeType })
         resolve(file)
       }, mimeType)

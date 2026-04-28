@@ -5,6 +5,8 @@
     width="90%"
     :close-on-click-modal="false"
     class="cropper-modal"
+    append-to-body
+    destroy-on-close
     @close="handleCancel"
   >
     <div class="cropper-content">
@@ -122,18 +124,22 @@ const handleKeydown = (e: KeyboardEvent) => {
 
 const moveCropBox = (direction: 'x' | 'y', delta: number) => {
   if (!cropperInstance.value) return
-  const data = cropperInstance.value.getData()
+  const selection = cropperInstance.value.getCropperSelection()
+  if (!selection) return
+  const data = selection.getData()
   const newData = { ...data }
   newData[direction] = data[direction] + delta
-  cropperInstance.value.setData(newData)
+  selection.setData(newData)
 }
 
 const adjustCropBox = (dimension: 'width' | 'height', delta: number) => {
   if (!cropperInstance.value) return
-  const data = cropperInstance.value.getData()
+  const selection = cropperInstance.value.getCropperSelection()
+  if (!selection) return
+  const data = selection.getData()
   const newData = { ...data }
   newData[dimension] = Math.max(10, data[dimension] + delta)
-  cropperInstance.value.setData(newData)
+  selection.setData(newData)
 }
 
 onMounted(() => {
@@ -156,7 +162,14 @@ const setAspectRatio = (ratio: number) => {
 
 const applyCustomRatio = () => {
   if (!customRatio.value) return
-  const ratio = eval(customRatio.value.toString())
+  const ratioStr = customRatio.value.toString()
+  const parts = ratioStr.split('/')
+  let ratio: number
+  if (parts.length === 2) {
+    ratio = parseFloat(parts[0]) / parseFloat(parts[1])
+  } else {
+    ratio = parseFloat(parts[0])
+  }
   if (isNaN(ratio) || ratio <= 0) {
     ElMessage.warning('请输入有效的比例')
     return
