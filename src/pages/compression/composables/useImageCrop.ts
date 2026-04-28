@@ -34,14 +34,14 @@ export function useImageCrop() {
   const setAspectRatio = (ratio: number) => {
     const selection = cropper.value?.getCropperSelection()
     if (selection) {
-      selection.setAspectRatio(ratio)
+      selection.aspectRatio = ratio
     }
   }
 
   const rotate = (degree: number) => {
     const image = cropper.value?.getCropperImage()
     if (image) {
-      image.rotate(degree)
+      image.$rotate(`${degree}deg`)
     }
   }
 

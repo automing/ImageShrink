@@ -68,7 +68,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onUnmounted, onMounted } from 'vue'
+import { ref, watch, onUnmounted, onMounted, nextTick } from 'vue'
 import { ElMessage } from 'element-plus'
 import { RefreshLeft, RefreshRight } from '@element-plus/icons-vue'
 import { useImageCrop } from '../composables/useImageCrop'
@@ -95,12 +95,15 @@ const { initCropper, getCroppedFile, getCropData, setAspectRatio: setRatio, rota
 
 watch(() => props.modelValue, async (val) => {
   visible.value = val
-  if (val && imageRef.value) {
+  if (val) {
+    await nextTick()
     setTimeout(() => {
       if (imageRef.value) {
         initCropper(imageRef.value)
       }
-    }, 100)
+    }, 300)
+  } else {
+    destroy()
   }
 })
 
@@ -153,11 +156,7 @@ onUnmounted(() => {
 
 const setAspectRatio = (ratio: number) => {
   aspectRatio.value = ratio
-  if (Number.isNaN(ratio)) {
-    setRatio(NaN)
-  } else {
-    setRatio(ratio)
-  }
+  setRatio(ratio)
 }
 
 const applyCustomRatio = () => {
