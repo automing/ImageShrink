@@ -5,22 +5,24 @@ import type { ImageFile, CompressionSettings } from '../types/image'
 export function useImageCompression() {
   const isCompressing = ref(false)
 
-  const compressImage = async (
-    imageFile: ImageFile,
-    settings: CompressionSettings,
-    onProgress?: (progress: number) => void
-  ): Promise<File> => {
-    const options = {
-      maxSizeMB: 10,
-      maxWidthOrHeight: settings.maxWidthOrHeight,
-      useWebWorker: true,
-      initialQuality: settings.quality,
-      fileType: `image/${settings.outputFormat}`,
-      onProgress
-    }
+const compressImage = async (
+  imageFile: ImageFile,
+  settings: CompressionSettings,
+  onProgress?: (progress: number) => void
+): Promise<File> => {
+  const sourceFile = imageFile.croppedFile || imageFile.file
 
-    return await imageCompression(imageFile.file, options)
+  const options = {
+    maxSizeMB: 10,
+    maxWidthOrHeight: settings.maxWidthOrHeight,
+    useWebWorker: true,
+    initialQuality: settings.quality,
+    fileType: `image/${settings.outputFormat}`,
+    onProgress
   }
+
+  return await imageCompression(sourceFile, options)
+}
 
   const compressBatch = async (
     images: ImageFile[],
