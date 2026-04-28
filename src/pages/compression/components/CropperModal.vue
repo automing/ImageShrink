@@ -66,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onUnmounted } from 'vue'
+import { ref, watch, onUnmounted, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import { RefreshLeft, RefreshRight } from '@element-plus/icons-vue'
 import { useImageCrop } from '../composables/useImageCrop'
@@ -89,7 +89,7 @@ const aspectRatio = ref<number>(NaN)
 const showCustomRatio = ref(false)
 const customRatio = ref<number | string>('')
 
-const { initCropper, getCroppedFile, getCropData, setAspectRatio: setRatio, rotate: rotateCropper, destroy } = useImageCrop()
+const { initCropper, getCroppedFile, getCropData, setAspectRatio: setRatio, rotate: rotateCropper, destroy, cropper: cropperInstance } = useImageCrop()
 
 watch(() => props.modelValue, async (val) => {
   visible.value = val
@@ -102,7 +102,46 @@ watch(() => props.modelValue, async (val) => {
   }
 })
 
+const handleKeydown = (e: KeyboardEvent) => {
+  if (!visible.value) return
+
+  if (e.key === 'Escape') {
+    handleCancel()
+  } else if (e.key === 'Enter' && e.ctrlKey) {
+    handleConfirm()
+  } else if (e.key === 'ArrowLeft') {
+    e.shiftKey ? adjustCropBox('width', -10) : moveCropBox('x', -10)
+  } else if (e.key === 'ArrowRight') {
+    e.shiftKey ? adjustCropBox('width', 10) : moveCropBox('x', 10)
+  } else if (e.key === 'ArrowUp') {
+    e.shiftKey ? adjustCropBox('height', -10) : moveCropBox('y', -10)
+  } else if (e.key === 'ArrowDown') {
+    e.shiftKey ? adjustCropBox('height', 10) : moveCropBox('y', 10)
+  }
+}
+
+const moveCropBox = (direction: 'x' | 'y', delta: number) => {
+  if (!cropperInstance.value) return
+  const data = cropperInstance.value.getData()
+  const newData = { ...data }
+  newData[direction] = data[direction] + delta
+  cropperInstance.value.setData(newData)
+}
+
+const adjustCropBox = (dimension: 'width' | 'height', delta: number) => {
+  if (!cropperInstance.value) return
+  const data = cropperInstance.value.getData()
+  const newData = { ...data }
+  newData[dimension] = Math.max(10, data[dimension] + delta)
+  cropperInstance.value.setData(newData)
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown)
+})
+
 onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown)
   destroy()
 })
 
