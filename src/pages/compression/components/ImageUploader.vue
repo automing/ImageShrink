@@ -96,8 +96,8 @@ const onFileSelect = (e: Event) => {
 .uploader {
   position: relative;
   border: 2px dashed #0D9488;
-  border-radius: 20px;
-  padding: 48px;
+  border-radius: 18px;
+  padding: 40px;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -132,40 +132,40 @@ const onFileSelect = (e: Event) => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 72px;
-  height: 72px;
+  width: 64px;
+  height: 64px;
   background: linear-gradient(135deg, #0D9488 0%, #14B8A6 100%);
-  border-radius: 18px;
+  border-radius: 16px;
   color: white;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   transition: all 0.3s ease;
   box-shadow: 0 4px 16px rgba(13, 148, 136, 0.3);
 }
 
 .main-text {
-  margin: 0 0 8px;
-  font-size: 18px;
+  margin: 0 0 6px;
+  font-size: 16px;
   font-weight: 600;
   color: #134E4A;
 }
 
 .hint {
-  margin: 0 0 16px;
-  font-size: 14px;
+  margin: 0 0 14px;
+  font-size: 13px;
   color: #14B8A6;
 }
 
 .supported-formats {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   justify-content: center;
 }
 
 .format-badge {
-  padding: 4px 12px;
+  padding: 3px 10px;
   background: #F0FDFA;
-  border-radius: 12px;
-  font-size: 12px;
+  border-radius: 10px;
+  font-size: 11px;
   font-weight: 500;
   color: #0D9488;
 }

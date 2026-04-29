@@ -84,15 +84,15 @@ const handleCrop = (file: File, cropData: CropData) => {
 <style scoped>
 .image-item {
   background: white;
-  border-radius: 16px;
+  border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 2px 12px rgba(13, 148, 136, 0.08);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .image-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(13, 148, 136, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(13, 148, 136, 0.15);
 }
 
 .image-item.completed {
@@ -102,7 +102,7 @@ const handleCrop = (file: File, cropData: CropData) => {
 .image-preview {
   position: relative;
   width: 100%;
-  height: 140px;
+  height: 120px;
   background: linear-gradient(135deg, #F0FDFA 0%, #CCFBF1 100%);
   display: flex;
   align-items: center;
@@ -110,10 +110,10 @@ const handleCrop = (file: File, cropData: CropData) => {
 }
 
 .image-preview img {
-  max-width: 90%;
-  max-height: 90%;
+  max-width: 88%;
+  max-height: 88%;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 6px;
 }
 
 .progress-overlay,
@@ -125,16 +125,16 @@ const handleCrop = (file: File, cropData: CropData) => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .error-overlay .el-icon {
-  font-size: 28px;
+  font-size: 24px;
   color: #EF4444;
 }
 
 .error-overlay span {
-  font-size: 12px;
+  font-size: 11px;
   color: #EF4444;
 }
 
@@ -145,7 +145,7 @@ const handleCrop = (file: File, cropData: CropData) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
   opacity: 0;
   transition: opacity 0.2s;
 }
@@ -155,12 +155,12 @@ const handleCrop = (file: File, cropData: CropData) => {
 }
 
 .image-info {
-  padding: 12px;
+  padding: 10px;
 }
 
 .image-info .name {
   margin: 0;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: #134E4A;
   white-space: nowrap;
@@ -169,11 +169,11 @@ const handleCrop = (file: File, cropData: CropData) => {
 }
 
 .image-info .sizes {
-  margin: 6px 0 0;
-  font-size: 11px;
+  margin: 5px 0 0;
+  font-size: 10px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
 }
 
 .image-info .original {
@@ -190,16 +190,16 @@ const handleCrop = (file: File, cropData: CropData) => {
 }
 
 .image-info .savings {
-  margin: 6px 0 0;
-  font-size: 12px;
+  margin: 5px 0 0;
+  font-size: 11px;
   color: #0D9488;
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
 }
 
 .image-info .savings .el-icon {
-  font-size: 14px;
+  font-size: 12px;
 }
 </style>

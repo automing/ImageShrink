@@ -43,8 +43,8 @@ defineEmits<{
 <style scoped>
 .image-list {
   background: white;
-  border-radius: 20px;
-  padding: 24px;
+  border-radius: 18px;
+  padding: 20px;
   box-shadow: 0 4px 24px rgba(13, 148, 136, 0.08);
 }
 
@@ -52,25 +52,25 @@ defineEmits<{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 16px;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
   border-bottom: 1px solid #F0FDFA;
 }
 
 .header-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .header-left .el-icon {
-  font-size: 24px;
+  font-size: 20px;
   color: #0D9488;
 }
 
 .header-left h3 {
   margin: 0;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: #134E4A;
 }
@@ -83,24 +83,24 @@ defineEmits<{
 .clear-btn {
   display: flex;
   align-items: center;
-  gap: 4px;
-  font-size: 14px;
+  gap: 3px;
+  font-size: 13px;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 14px;
 }
 
 .empty-state {
   text-align: center;
-  padding: 48px 24px;
+  padding: 40px 20px;
   color: #99F6E4;
 }
 
 .empty-state p {
-  margin: 12px 0 0;
-  font-size: 14px;
+  margin: 10px 0 0;
+  font-size: 13px;
 }
 </style>

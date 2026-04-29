@@ -222,18 +222,18 @@ const downloadZip = async () => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 80px;
-  height: 80px;
+  width: 72px;
+  height: 72px;
   background: linear-gradient(135deg, #0D9488 0%, #14B8A6 100%);
-  border-radius: 20px;
+  border-radius: 18px;
   color: white;
-  margin-bottom: 24px;
-  box-shadow: 0 8px 32px rgba(13, 148, 136, 0.3);
+  margin-bottom: 20px;
+  box-shadow: 0 6px 24px rgba(13, 148, 136, 0.3);
 }
 
 .hero-section h1 {
   margin: 0;
-  font-size: 40px;
+  font-size: 36px;
   font-weight: 700;
   background: linear-gradient(135deg, #134E4A 0%, #0D9488 100%);
   -webkit-background-clip: text;
@@ -242,15 +242,15 @@ const downloadZip = async () => {
 }
 
 .subtitle {
-  margin: 12px 0 24px;
-  font-size: 18px;
+  margin: 10px 0 20px;
+  font-size: 16px;
   color: #134E4A;
   opacity: 0.8;
 }
 
 .features {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -258,11 +258,11 @@ const downloadZip = async () => {
 .feature-tag {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
+  gap: 5px;
+  padding: 6px 14px;
   background: white;
-  border-radius: 20px;
-  font-size: 14px;
+  border-radius: 18px;
+  font-size: 13px;
   color: #134E4A;
   box-shadow: 0 2px 8px rgba(13, 148, 136, 0.1);
 }
@@ -274,29 +274,29 @@ const downloadZip = async () => {
 .main-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px 60px;
+  padding: 0 20px 50px;
 }
 
 .workspace {
-  margin-top: 24px;
+  margin-top: 20px;
 }
 
 .back-button {
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .settings-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-bottom: 32px;
+  gap: 20px;
+  margin-bottom: 28px;
 }
 
 .section-card,
 .action-card {
   background: white;
-  border-radius: 16px;
-  padding: 24px;
+  border-radius: 14px;
+  padding: 20px;
   box-shadow: 0 4px 24px rgba(13, 148, 136, 0.08),
               0 1px 2px rgba(13, 148, 136, 0.04);
 }
@@ -304,18 +304,18 @@ const downloadZip = async () => {
 .card-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 10px;
+  margin-bottom: 16px;
 }
 
 .card-header .el-icon {
-  font-size: 24px;
+  font-size: 20px;
   color: #0D9488;
 }
 
 .card-header h3 {
   margin: 0;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: #134E4A;
 }
@@ -323,13 +323,13 @@ const downloadZip = async () => {
 .action-buttons {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .action-btn {
-  height: 52px;
-  font-size: 16px;
-  border-radius: 12px;
+  height: 46px;
+  font-size: 14px;
+  border-radius: 10px;
 }
 
 .action-btn.is-disabled {
@@ -356,8 +356,8 @@ const downloadZip = async () => {
 .stats {
   display: flex;
   justify-content: space-around;
-  margin-top: 24px;
-  padding-top: 24px;
+  margin-top: 20px;
+  padding-top: 20px;
   border-top: 1px solid #F0FDFA;
 }
 
@@ -367,16 +367,16 @@ const downloadZip = async () => {
 
 .stat-value {
   display: block;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   color: #0D9488;
 }
 
 .stat-label {
   display: block;
-  font-size: 12px;
+  font-size: 11px;
   color: #14B8A6;
-  margin-top: 4px;
+  margin-top: 3px;
 }
 
 @media (max-width: 768px) {

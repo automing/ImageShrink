@@ -97,13 +97,13 @@ const sizeMarks = reactive({
 .settings-panel {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
 }
 
 .setting-group {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .setting-header {
@@ -113,28 +113,28 @@ const sizeMarks = reactive({
 }
 
 .setting-header label {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: #134E4A;
 }
 
 .setting-value {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: #0D9488;
   background: #F0FDFA;
-  padding: 4px 12px;
-  border-radius: 8px;
+  padding: 3px 10px;
+  border-radius: 6px;
 }
 
 :deep(.el-slider) {
   --el-slider-main-bg-color: #CCFBF1;
   --el-slider-runway-bg-color: #F0FDFA;
-  --el-slider-button-size: 20px;
+  --el-slider-button-size: 18px;
 }
 
 :deep(.el-slider__button) {
-  border: 3px solid #0D9488;
+  border: 2px solid #0D9488;
   background: white;
   box-shadow: 0 2px 8px rgba(13, 148, 136, 0.3);
 }
@@ -144,13 +144,13 @@ const sizeMarks = reactive({
 }
 
 :deep(.el-slider__marks-text) {
-  font-size: 10px;
+  font-size: 9px;
   color: #14B8A6;
 }
 
 .format-options {
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 
 .format-option {
@@ -158,10 +158,10 @@ const sizeMarks = reactive({
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 12px;
+  padding: 10px;
   background: #F0FDFA;
   border: 2px solid transparent;
-  border-radius: 12px;
+  border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -181,13 +181,13 @@ const sizeMarks = reactive({
 }
 
 .format-name {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: #134E4A;
 }
 
 .format-ext {
-  font-size: 11px;
+  font-size: 10px;
   color: #14B8A6;
 }
 </style>
