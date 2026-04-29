@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import ImageItem from './ImageItem.vue'
 import { Files, Delete, Picture } from '@element-plus/icons-vue'
-import type { ImageFile } from '../types/image'
+import type { ImageFile } from '@/types/image'
 
 defineProps<{
   images: ImageFile[]

@@ -44,7 +44,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { CircleCloseFilled, Clock, Bottom, Crop } from '@element-plus/icons-vue'
-import type { ImageFile, CropData } from '../types/image'
+import type { ImageFile, CropData } from '@/types/image'
 import CropperModal from './CropperModal.vue'
 
 const props = defineProps<{

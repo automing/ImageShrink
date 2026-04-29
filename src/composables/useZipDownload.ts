@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import JSZip from 'jszip'
 import { saveAs } from 'file-saver'
-import type { ImageFile } from '../types/image'
+import type { ImageFile } from '@/types/image'
 
 export function useZipDownload() {
   const isDownloading = ref(false)

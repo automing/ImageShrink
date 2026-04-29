@@ -52,7 +52,7 @@
 
 <script setup lang="ts">
 import { computed, reactive } from 'vue'
-import type { CompressionSettings } from '../types/image'
+import type { CompressionSettings } from '@/types/image'
 
 const props = defineProps<{
   modelValue: CompressionSettings

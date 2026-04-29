@@ -39,7 +39,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { UploadFilled } from '@element-plus/icons-vue'
-import type { ImageFile } from '../types/image'
+import type { ImageFile } from '@/types/image'
 
 const props = defineProps<{
   maxFiles?: number

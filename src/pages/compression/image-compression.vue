@@ -112,9 +112,9 @@ import {
 import ImageUploader from './components/ImageUploader.vue'
 import SettingsPanel from './components/SettingsPanel.vue'
 import ImageList from './components/ImageList.vue'
-import { useImageCompression } from './composables/useImageCompression'
-import { useZipDownload } from './composables/useZipDownload'
-import type { ImageFile, CompressionSettings } from './types/image'
+import { useImageCompression } from '@/composables/useImageCompression'
+import { useZipDownload } from '@/composables/useZipDownload'
+import type { ImageFile, CompressionSettings } from '@/types/image'
 
 const images = ref<ImageFile[]>([])
 const settings = ref<CompressionSettings>({

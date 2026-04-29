@@ -1,28 +1,28 @@
 import { ref } from 'vue'
 import imageCompression from 'browser-image-compression'
-import type { ImageFile, CompressionSettings } from '../types/image'
+import type { ImageFile, CompressionSettings } from '@/types/image'
 
 export function useImageCompression() {
   const isCompressing = ref(false)
 
-const compressImage = async (
-  imageFile: ImageFile,
-  settings: CompressionSettings,
-  onProgress?: (progress: number) => void
-): Promise<File> => {
-  const sourceFile = imageFile.croppedFile || imageFile.file
+  const compressImage = async (
+    imageFile: ImageFile,
+    settings: CompressionSettings,
+    onProgress?: (progress: number) => void
+  ): Promise<File> => {
+    const sourceFile = imageFile.croppedFile || imageFile.file
 
-  const options = {
-    maxSizeMB: 10,
-    maxWidthOrHeight: settings.maxWidthOrHeight,
-    useWebWorker: true,
-    initialQuality: settings.quality,
-    fileType: `image/${settings.outputFormat}`,
-    onProgress
+    const options = {
+      maxSizeMB: 10,
+      maxWidthOrHeight: settings.maxWidthOrHeight,
+      useWebWorker: true,
+      initialQuality: settings.quality,
+      fileType: `image/${settings.outputFormat}`,
+      onProgress
+    }
+
+    return await imageCompression(sourceFile, options)
   }
-
-  return await imageCompression(sourceFile, options)
-}
 
   const compressBatch = async (
     images: ImageFile[],

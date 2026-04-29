@@ -23,6 +23,17 @@
         </el-button-group>
 
         <el-button-group>
+          <el-button @click="zoom(-0.2)">
+            <el-icon><ZoomOut /></el-icon>
+            缩小
+          </el-button>
+          <el-button @click="zoom(0.25)">
+            <el-icon><ZoomIn /></el-icon>
+            放大
+          </el-button>
+        </el-button-group>
+
+        <el-button-group>
           <el-button
             :type="aspectRatio === 1 ? 'primary' : 'default'"
             @click="setAspectRatio(1)"
@@ -30,32 +41,27 @@
             1:1
           </el-button>
           <el-button
-            :type="!aspectRatio && aspectRatio !== 0 ? 'primary' : 'default'"
+            :type="aspectRatio === (4/3) ? 'primary' : 'default'"
+            @click="setAspectRatio(4/3)"
+          >
+            4:3
+          </el-button>
+          <el-button
+            :type="aspectRatio === (16/9) ? 'primary' : 'default'"
+            @click="setAspectRatio(16/9)"
+          >
+            16:9
+          </el-button>
+          <el-button
+            :type="aspectRatio === 0 ? 'primary' : 'default'"
             @click="setAspectRatio(NaN)"
           >
             自由
           </el-button>
         </el-button-group>
-
-        <el-input
-          v-if="showCustomRatio"
-          v-model.number="customRatio"
-          placeholder="如: 16/9"
-          @keyup.enter="applyCustomRatio"
-          style="width: 120px"
-        />
-        <el-button v-else @click="showCustomRatio = true">
-          自定义
-        </el-button>
       </div>
 
-      <div class="cropper-image-wrapper">
-        <img
-          ref="imageRef"
-          :src="imageUrl"
-          class="cropper-image"
-        />
-      </div>
+      <div class="cropper-image-wrapper" ref="wrapperRef"></div>
     </div>
 
     <template #footer>
@@ -70,9 +76,9 @@
 <script setup lang="ts">
 import { ref, watch, onUnmounted, onMounted, nextTick } from 'vue'
 import { ElMessage } from 'element-plus'
-import { RefreshLeft, RefreshRight } from '@element-plus/icons-vue'
-import { useImageCrop } from '../composables/useImageCrop'
-import type { CropData } from '../types/image'
+import { RefreshLeft, RefreshRight, ZoomIn, ZoomOut } from '@element-plus/icons-vue'
+import { useImageCrop } from '@/composables/useImageCrop'
+import type { CropData } from '@/types/image'
 
 const props = defineProps<{
   modelValue: boolean
@@ -86,20 +92,20 @@ const emit = defineEmits<{
 }>()
 
 const visible = ref(props.modelValue)
-const imageRef = ref<HTMLImageElement | null>(null)
+const wrapperRef = ref<HTMLElement | null>(null)
 const aspectRatio = ref<number>(NaN)
 const showCustomRatio = ref(false)
 const customRatio = ref<number | string>('')
 
-const { initCropper, getCroppedFile, getCropData, setAspectRatio: setRatio, rotate: rotateCropper, destroy, cropper: cropperInstance } = useImageCrop()
+const { initCropper, getCroppedFile, getCropData, setAspectRatio: setRatio, rotate: rotateCropper, zoom: zoomCropper, destroy } = useImageCrop()
 
 watch(() => props.modelValue, async (val) => {
   visible.value = val
   if (val) {
     await nextTick()
     setTimeout(() => {
-      if (imageRef.value) {
-        initCropper(imageRef.value)
+      if (wrapperRef.value) {
+        initCropper(wrapperRef.value, props.imageUrl)
       }
     }, 300)
   } else {
@@ -114,35 +120,7 @@ const handleKeydown = (e: KeyboardEvent) => {
     handleCancel()
   } else if (e.key === 'Enter' && e.ctrlKey) {
     handleConfirm()
-  } else if (e.key === 'ArrowLeft') {
-    e.shiftKey ? adjustCropBox('width', -10) : moveCropBox('x', -10)
-  } else if (e.key === 'ArrowRight') {
-    e.shiftKey ? adjustCropBox('width', 10) : moveCropBox('x', 10)
-  } else if (e.key === 'ArrowUp') {
-    e.shiftKey ? adjustCropBox('height', -10) : moveCropBox('y', -10)
-  } else if (e.key === 'ArrowDown') {
-    e.shiftKey ? adjustCropBox('height', 10) : moveCropBox('y', 10)
   }
-}
-
-const moveCropBox = (direction: 'x' | 'y', delta: number) => {
-  if (!cropperInstance.value) return
-  const selection = cropperInstance.value.getCropperSelection()
-  if (!selection) return
-  const data = selection.getData()
-  const newData = { ...data }
-  newData[direction] = data[direction] + delta
-  selection.setData(newData)
-}
-
-const adjustCropBox = (dimension: 'width' | 'height', delta: number) => {
-  if (!cropperInstance.value) return
-  const selection = cropperInstance.value.getCropperSelection()
-  if (!selection) return
-  const data = selection.getData()
-  const newData = { ...data }
-  newData[dimension] = Math.max(10, data[dimension] + delta)
-  selection.setData(newData)
 }
 
 onMounted(() => {
@@ -182,6 +160,10 @@ const rotate = (degree: number) => {
   rotateCropper(degree)
 }
 
+const zoom = (ratio: number) => {
+  zoomCropper(ratio)
+}
+
 const handleConfirm = async () => {
   try {
     const file = await getCroppedFile(props.imageFile)
@@ -217,12 +199,17 @@ const handleCancel = () => {
 
 .cropper-image-wrapper {
   width: 100%;
-  max-height: 70vh;
+  height: 70vh;
   overflow: hidden;
   background: #f5f5f5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+}
+
+:deep(cropper-canvas) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-width: 0 !important;
+  min-height: 0 !important;
 }
 
 .cropper-image {
