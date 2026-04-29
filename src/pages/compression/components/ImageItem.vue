@@ -9,9 +9,13 @@
         <el-icon><CircleCloseFilled /></el-icon>
         <span>压缩失败</span>
       </div>
-      <div v-else-if="image.status === 'pending'" class="pending-overlay">
-        <el-icon><Clock /></el-icon>
-        <span>等待中</span>
+      <div v-if="image.status === 'pending'" class="hover-actions">
+        <el-button size="small" @click="openCropper">
+          <el-icon><Crop /></el-icon>
+        </el-button>
+        <el-button size="small" type="danger" @click="$emit('remove')">
+          <el-icon><Delete /></el-icon>
+        </el-button>
       </div>
     </div>
     <div class="image-info">
@@ -25,12 +29,6 @@
         <el-icon><Bottom /></el-icon>
         {{ savingsPercent }}%
       </p>
-      <div v-if="image.status === 'pending'" class="actions">
-        <el-button size="small" @click="openCropper">
-          <el-icon><Crop /></el-icon>
-          {{ image.croppedFile ? '重新裁剪' : '裁剪' }}
-        </el-button>
-      </div>
     </div>
     <CropperModal
       v-model="showCropper"
@@ -43,12 +41,16 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { CircleCloseFilled, Clock, Bottom, Crop } from '@element-plus/icons-vue'
+import { CircleCloseFilled, Bottom, Crop, Delete } from '@element-plus/icons-vue'
 import type { ImageFile, CropData } from '@/types/image'
 import CropperModal from './CropperModal.vue'
 
 const props = defineProps<{
   image: ImageFile
+}>()
+
+defineEmits<{
+  (e: 'remove'): void
 }>()
 
 const showCropper = ref(false)
@@ -115,8 +117,7 @@ const handleCrop = (file: File, cropData: CropData) => {
 }
 
 .progress-overlay,
-.error-overlay,
-.pending-overlay {
+.error-overlay {
   position: absolute;
   inset: 0;
   background: rgba(255, 255, 255, 0.95);
@@ -132,19 +133,25 @@ const handleCrop = (file: File, cropData: CropData) => {
   color: #EF4444;
 }
 
-.error-overlay span,
-.pending-overlay span {
+.error-overlay span {
   font-size: 12px;
   color: #EF4444;
 }
 
-.pending-overlay .el-icon {
-  font-size: 28px;
-  color: #14B8A6;
+.hover-actions {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.2s;
 }
 
-.pending-overlay span {
-  color: #14B8A6;
+.image-preview:hover .hover-actions {
+  opacity: 1;
 }
 
 .image-info {
@@ -194,9 +201,5 @@ const handleCrop = (file: File, cropData: CropData) => {
 
 .image-info .savings .el-icon {
   font-size: 14px;
-}
-
-.image-info .actions {
-  margin-top: 8px;
 }
 </style>

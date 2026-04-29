@@ -92,7 +92,7 @@
             </div>
           </div>
 
-          <ImageList :images="images" @clear="clearImages" />
+          <ImageList :images="images" @clear="clearImages" @remove="removeImage" />
         </div>
       </template>
     </div>
@@ -160,6 +160,16 @@ const clearImages = () => {
     if (img.compressedUrl) URL.revokeObjectURL(img.compressedUrl)
   })
   images.value = []
+}
+
+const removeImage = (id: string) => {
+  const index = images.value.findIndex(img => img.id === id)
+  if (index > -1) {
+    const img = images.value[index]
+    URL.revokeObjectURL(img.originalUrl)
+    if (img.compressedUrl) URL.revokeObjectURL(img.compressedUrl)
+    images.value.splice(index, 1)
+  }
 }
 
 const startCompression = async () => {

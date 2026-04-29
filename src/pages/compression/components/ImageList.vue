@@ -15,6 +15,7 @@
         v-for="image in images"
         :key="image.id"
         :image="image"
+        @remove="$emit('remove', image.id)"
       />
     </div>
     <div v-if="images.length === 0" class="empty-state">
@@ -35,6 +36,7 @@ defineProps<{
 
 defineEmits<{
   (e: 'clear'): void
+  (e: 'remove', id: string): void
 }>()
 </script>
 
