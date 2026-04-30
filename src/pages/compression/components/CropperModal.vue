@@ -171,9 +171,12 @@ const handleConfirm = async () => {
     if (cropData) {
       emit('crop', file, cropData)
       emit('update:modelValue', false)
+    } else {
+      ElMessage.error('无法获取裁剪数据')
     }
   } catch (error) {
-    ElMessage.error('裁剪失败')
+    console.error('Crop error:', error)
+    ElMessage.error('裁剪失败: ' + (error instanceof Error ? error.message : '未知错误'))
   }
 }
 

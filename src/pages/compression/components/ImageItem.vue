@@ -49,8 +49,9 @@ const props = defineProps<{
   image: ImageFile
 }>()
 
-defineEmits<{
+const emit = defineEmits<{
   (e: 'remove'): void
+  (e: 'update', image: ImageFile): void
 }>()
 
 const showCropper = ref(false)
@@ -75,8 +76,27 @@ const openCropper = () => {
 }
 
 const handleCrop = (file: File, cropData: CropData) => {
-  props.image.croppedFile = file
-  props.image.cropData = cropData
+  // 释放旧的 originalUrl
+  URL.revokeObjectURL(props.image.originalUrl)
+  
+  // 释放旧的 compressedUrl（如果存在）
+  if (props.image.compressedUrl) {
+    URL.revokeObjectURL(props.image.compressedUrl)
+  }
+  
+  const updatedImage: ImageFile = {
+    ...props.image,
+    croppedFile: file,
+    cropData: cropData,
+    originalUrl: URL.createObjectURL(file),
+    originalSize: file.size,
+    // 重置压缩状态，允许重新压缩
+    status: 'pending',
+    compressedSize: 0,
+    compressedUrl: null
+  }
+  
+  emit('update', updatedImage)
   showCropper.value = false
 }
 </script>

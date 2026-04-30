@@ -92,7 +92,7 @@
             </div>
           </div>
 
-          <ImageList :images="images" @clear="clearImages" @remove="removeImage" />
+          <ImageList :images="images" @clear="clearImages" @remove="removeImage" @update="updateImage" />
         </div>
       </template>
     </div>
@@ -169,6 +169,13 @@ const removeImage = (id: string) => {
     URL.revokeObjectURL(img.originalUrl)
     if (img.compressedUrl) URL.revokeObjectURL(img.compressedUrl)
     images.value.splice(index, 1)
+  }
+}
+
+const updateImage = (updatedImage: ImageFile) => {
+  const index = images.value.findIndex(img => img.id === updatedImage.id)
+  if (index > -1) {
+    images.value[index] = updatedImage
   }
 }
 

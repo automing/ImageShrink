@@ -115,12 +115,12 @@ export function useImageCrop() {
   }
 
   const getCroppedFile = async (originalFile: File, outputFormat?: string): Promise<File> => {
-    const canvas = cropper.value?.getCropperCanvas()
-    if (!canvas) {
-      throw new Error('Failed to get canvas')
+    const selection = cropper.value?.getCropperSelection()
+    if (!selection) {
+      throw new Error('Failed to get selection')
     }
 
-    const canvasEl = await canvas.$toCanvas()
+    const canvasEl = await selection.$toCanvas()
 
     return new Promise((resolve, reject) => {
       const ext = outputFormat || originalFile.name.split('.').pop() || 'jpeg'
